@@ -18,6 +18,7 @@ class BaseApp():
     BASENAME = "BaseApp"
     SNAKE_NAME = BASENAME.lower().replace(" ", "_")
     BASE_DIR = os.path.join(expanduser("~"), "." + SNAKE_NAME)
+    app_configs = []
     logging_fmt = (
         "%(asctime)s %(filename)s %(lineno)d %(name)s %(levelname)-8s  %(message)s"
     )
@@ -82,6 +83,9 @@ class BaseApp():
                 value=[r"^/accounts/.*"],
             )
 
+        for app_config in self.app_configs:
+            plug_in_django_manage.plug_in(app_config, self.config)
+
     def migrate(self):
         plug_in_django_manage.run(
             sys.argv[0],
@@ -92,7 +96,7 @@ class BaseApp():
             "migrate"
         )
 
-    def run(self,open_browser=False):
+    def run(self,open_browser=False,open_data_dir=False):
         if open_browser:
             def check_thread():
                 import urllib.request
@@ -102,7 +106,16 @@ class BaseApp():
                 webbrowser.open("http://localhost:{}".format(plug_in_django_manage.CONFIG.get("django_settings", "port", default=8000)), new=2)
             import threading
             threading.Thread(target=check_thread).start()
-
+        if open_data_dir:
+            import webbrowser
+            if sys.platform == 'darwin':
+                webbrowser.open(self.BASE_DIR)
+            elif sys.platform == 'linux2':
+                webbrowser.open(self.BASE_DIR)
+            elif sys.platform == 'win32':
+                webbrowser.open(self.BASE_DIR)
+            else:
+                webbrowser.open(self.BASE_DIR)
         plug_in_django_manage.run(
             sys.argv[0],
             "runserver",
