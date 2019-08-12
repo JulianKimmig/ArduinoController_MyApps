@@ -2,6 +2,7 @@
 {% load sekizai_tags %}
 {% load static %}
 {% block contend %}
+{% include "api_controller_sidebar.html" %}
     <div class="row">
         <div class="col-md-6" style="height: 500px;">
             <canvas id="datachart"></canvas>
@@ -9,6 +10,7 @@
         <div class="col-md-4">
         </div>
     </div>
+
 {% endblock %}
 {% block javascript%}
     {% addtoblock "jss" %}

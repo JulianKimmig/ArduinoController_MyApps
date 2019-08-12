@@ -1,5 +1,14 @@
 {% extends 'plug_in_django_basic.html' %}
 {% load static %}
 {% block contend %}
-    HUHU
+    <table>
+    {% for profile in roasting_profiles %}
+    <tr>
+        <td>{{profile.name}}</td>
+        <td><a href='{% url "coffe_roaster:run_roast" id=profile.id %}'>Run</a></td>
+        <td><a href='{% url "coffe_roaster:roasting_profile" id=profile.id %}'>Edit</a></td>
+        <td><img src="{{profile.image.url}}" width="200"/></td>
+    </tr>
+    {%endfor%}
+    </table>
 {% endblock %}

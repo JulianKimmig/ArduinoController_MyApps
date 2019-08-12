@@ -12,8 +12,8 @@
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 <button type="submit" class="btn btn-success">save profile</button>
-                {% if id %}
-                <a class="btn btn-info" href="{% url "coffe_roaster:run_roast" id=id %}">run profile</a>
+                {% if profile %}
+                <a class="btn btn-info" href="{% url "coffe_roaster:run_roast" id=profile.id %}">run profile</a>
                 {% endif %}
             </form>
         </div>
