@@ -2,6 +2,8 @@ import logging
 import os
 import sys
 import time
+
+from arduino_controller.serialreader.serialreader import SerialReader
 from logging.handlers import RotatingFileHandler
 from os.path import expanduser
 
@@ -21,7 +23,6 @@ class BaseApp():
     )
 
     login_required = True
-
     def __init__(self):
         os.makedirs(self.BASE_DIR, exist_ok=True)
         self.config = JsonDict(os.path.join(self.BASE_DIR, self.SNAKE_NAME + "_config.json"))
@@ -81,10 +82,20 @@ class BaseApp():
                 value=[r"^/accounts/.*"],
             )
 
+    def migrate(self):
+        plug_in_django_manage.run(
+            sys.argv[0],
+            "makemigrations"
+            )
+        plug_in_django_manage.run(
+            sys.argv[0],
+            "migrate"
+        )
+
     def run(self,open_browser=False):
         if open_browser:
             def check_thread():
-                import urllib
+                import urllib.request
                 while not urllib.request.urlopen("http://localhost:{}".format(plug_in_django_manage.CONFIG.get("django_settings", "port", default=8000))).getcode() == 200:
                     time.sleep(200)
                 import webbrowser
