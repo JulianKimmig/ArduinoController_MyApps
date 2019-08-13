@@ -49,6 +49,8 @@
                 let data = [];
                 var myRe = /\(\d+\.?\d*,\s*\d+\.?\d*\)/g;
                 var eles  =$('#id_data').val().match(myRe);
+                if(eles === null)
+                    return;
                 for(let i=0;i<eles.length;i++){
                     let numbers=eles[i].match(/\d+\.?\d*/g);
                     data.push({x:parseFloat(numbers[0]),y:parseFloat(numbers[1])})
