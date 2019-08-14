@@ -1,8 +1,8 @@
-import threading
 import time
 
-from arduino_board_collection.boards.sensor_signal_boards.pid_boards.relay_thermistor_pid.board import \
-    RelayThermistor2Board, RelayThermistorModule
+from arduino_board_collection.boards.sensor_signal_boards.signal_switch_boards.relay_thermistor_bang_bang.board import \
+    Relay2ThermistorBangBangBoard
+from arduino_board_collection.boards.signal_boards.pulses.dutycycle_digital.board import DutyCycleBoard
 from arduino_controller.board_api import BoardApi, api_function
 
 
@@ -12,11 +12,16 @@ def api_functiosn(target_temperature,func):
 
 
 class CoffeRoasterApi(BoardApi):
-    required_boards=[RelayThermistor2Board]
+    required_boards=[
+       # RelayThermistor2Board
+        Relay2ThermistorBangBangBoard
+    ]
 
     @api_function(visible=False)
     def run_programm(self,temperature_program):
-        board:RelayThermistor2Board = self.linked_boards[0]
+        board= self.linked_boards[0]
+            #:RelayThermistor2Board \
+
         board.running = False
         board.reset()
         time.sleep(0.4)
