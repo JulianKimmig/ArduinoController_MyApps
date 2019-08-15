@@ -1,13 +1,13 @@
 import time
 
-from arduino_board_collection.boards.controller_boards.motors.AccelStepperBoard.board import AccelStepperBoard
+from arduino_board_collection.boards.sensor_boards.force.tesile_test_board.tesile_test_board import TensileTestBoard
 from arduino_controller.board_api import BoardApi, api_function
 
 
 class TensileTesterApi(BoardApi):
     required_boards=[
        # RelayThermistor2Board
-        AccelStepperBoard
+        TensileTestBoard
     ]
 
     @api_function(visible=False)
