@@ -1,0 +1,25 @@
+{% extends 'plug_in_django_basic.html' %}
+{% load static %}
+{% block contend %}
+    <div class="topic-title h5">Tests</div>
+    <button class="btn btn-primary">+ perform Test</button>
+    <table>
+    {% for test in tensile_tests %}
+    <tr>
+        <td>{{test.name}}</td>
+        <td><a href='{% url "tensile_tester:view_test" id=test.id %}'>Show</a></td>
+        <td><img src="{{tensile_tester.image.url}}" width="200"/></td>
+    </tr>
+    {%endfor%}
+    </table>
+    <div class="topic-title h5">Routines</div>
+    <a class="btn btn-primary" href="{% url 'tensile_tester:new_routine'%}">create Routine</a>
+    <table>
+        {% for routine in tensile_routines %}
+        <tr>
+            <td>{{routine.name}}</td>
+            <td><a href='{% url "tensile_tester:view_routine" id=test.id %}'>Show</a></td>
+        </tr>
+        {%endfor%}
+    </table>
+{% endblock %}

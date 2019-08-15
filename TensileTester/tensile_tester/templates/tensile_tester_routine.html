@@ -1,0 +1,50 @@
+{% extends 'plug_in_django_basic.html' %}
+{% load sekizai_tags %}
+{% load static %}
+{% block contend %}
+{% include "api_controller_sidebar.html" %}
+<div class="row">
+    <div class="col-md-6" style="height: 500px;">
+        <canvas id="datachart"></canvas>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
+
+{% endblock %}
+{% block stylesheet %}
+{% addtoblock "css" %}
+<link rel="stylesheet" type="text/css" href="{% static "django_arduino_controller/arduino_api_controller.css" %}">
+{% endaddtoblock %}
+{% endblock %}
+{% block javascript%}
+{% addtoblock "jss" %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js" integrity="sha256-xKeoJ50pzbUGkpQxDYHD7o7hxe0LaOGeguUidbq6vis=" crossorigin="anonymous"></script>
+<script src="{% static 'django_arduino_controller/json_websocket.js' %}"></script>
+<script type="application/javascript" src="{% static 'django_arduino_controller/arduino_api_controller.js' %}"></script>
+{% endaddtoblock %}
+{% addtoblock "jss" %}
+<script>
+    arduino_api_controller.api_ws_url = "ws://"+window.location.host+"{% url 'django_arduino_controller:api_websocket'%}";
+    $(document).ready(function() {
+        var ctx = $('#datachart');
+
+        chart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                labels: ["profile"],
+                datasets: [
+                    {data:[
+                        ],label: "profile",fill: false,showLine: true,pointRadius: 4,borderColor:"#ff0000"}
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            },
+        });
+    });
+</script>
+{% endaddtoblock %}
+
+{% endblock %}
