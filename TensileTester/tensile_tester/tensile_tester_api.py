@@ -1,13 +1,14 @@
 import time
 
+from arduino_board_collection.boards.sensor_boards.basic.bush_button.board import PushButtonBoard
 from arduino_board_collection.boards.sensor_boards.force.tesile_test_board.tesile_test_board import TensileTestBoard
 from arduino_controller.board_api import BoardApi, api_function
 
 
 class TensileTesterApi(BoardApi):
     required_boards=[
-       # RelayThermistor2Board
-        TensileTestBoard
+        PushButtonBoard,
+        TensileTestBoard,
     ]
 
     @api_function(visible=False)
