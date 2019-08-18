@@ -1,11 +1,6 @@
 import time
 
-from arduino_board_collection.boards.sensor_boards.thermal.max6675.board import Max6675Board
-from arduino_board_collection.boards.sensor_signal_boards.signal_switch_boards.relay_max6675_bang_bang.board import \
-    RelayMax6675BangBangBoard
-from arduino_board_collection.boards.sensor_signal_boards.signal_switch_boards.relay_thermistor_bang_bang.board import \
-    Relay2ThermistorBangBangBoard
-from arduino_board_collection.boards.signal_boards.pulses.dutycycle_digital.board import DutyCycleBoard
+from CoffeRoaster.board import CoffeRoasterBoard
 from arduino_controller.board_api import BoardApi, api_function
 
 
@@ -16,9 +11,7 @@ def api_functiosn(target_temperature,func):
 
 class CoffeRoasterApi(BoardApi):
     required_boards=[
-       # RelayThermistor2Board
-        RelayMax6675BangBangBoard,
-        #Max6675Board
+        CoffeRoasterBoard
     ]
 
     @api_function(visible=False)
