@@ -23,3 +23,7 @@ BOARDDATASTREAMRECEIVER = None
 class NewRoutine(View):
     def get(self, request):
         return render(request, "tensile_tester_routine.html")
+
+
+def calibrate(request):
+    return render(request, "tensile_tester_calibrate.html")

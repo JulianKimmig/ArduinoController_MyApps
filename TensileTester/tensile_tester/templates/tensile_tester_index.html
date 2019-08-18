@@ -2,6 +2,7 @@
 {% load static %}
 {% block contend %}
     <div class="topic-title h5">Tests</div>
+    <a class="btn btn-warning" href='{% url "tensile_tester:calibrate"%}'>Calibrate</a>
     <button class="btn btn-primary">+ perform Test</button>
     <table>
     {% for test in tensile_tests %}
