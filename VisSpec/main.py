@@ -15,9 +15,6 @@ from json_dict import JsonDict
 from os.path import expanduser
 
 
-
-
-
 class VisSpecApp(BaseApp):
     DEBUGGING = True
     BASENAME = "Vis Spec"
@@ -27,8 +24,9 @@ class VisSpecApp(BaseApp):
     login_required = False
 
     def __init__(self):
-        #board_collection.
+        # board_collection.
         import arduino_board_collection.board_collection
+
         super().__init__()
         plug_in_django_manage.plug_in(VisSpecConfig, self.config)
 
@@ -36,4 +34,3 @@ class VisSpecApp(BaseApp):
 if __name__ == "__main__":
     VisSpecConfig.baseurl = ""
     VisSpecApp().run(open_browser=True)
-

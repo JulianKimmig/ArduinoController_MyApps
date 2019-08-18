@@ -14,14 +14,11 @@ class TensileTesterApp(BaseApp):
     login_required = False
 
     def __init__(self):
-        #board_collection.
+        # board_collection.
         super().__init__()
-
-
 
 
 if __name__ == "__main__":
     TensileTesterApp.app_configs[0].baseurl = ""
-    #TensileTesterApp().migrate()
-    TensileTesterApp().run(open_browser=False,open_data_dir=True)
-
+    # TensileTesterApp().migrate()
+    TensileTesterApp().run(open_browser=False, open_data_dir=True)

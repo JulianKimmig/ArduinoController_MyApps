@@ -14,14 +14,11 @@ class CoffeRoasterApp(BaseApp):
     login_required = False
 
     def __init__(self):
-        #board_collection.
+        # board_collection.
         super().__init__()
-
-
 
 
 if __name__ == "__main__":
     CoffeRoasterApp.app_configs[0].baseurl = ""
     CoffeRoasterApp().migrate()
-    CoffeRoasterApp().run(open_browser=False,open_data_dir=True)
-
+    CoffeRoasterApp().run(open_browser=False, open_data_dir=True)

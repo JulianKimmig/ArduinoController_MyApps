@@ -13,7 +13,8 @@ from json_dict import JsonDict
 from plug_in_django import manage as plug_in_django_manage
 from django_arduino_controller.apps import DjangoArduinoControllerConfig
 
-class BaseApp():
+
+class BaseApp:
     DEBUGGING = False
     BASENAME = "BaseApp"
     SNAKE_NAME = BASENAME.lower().replace(" ", "_")
@@ -24,9 +25,12 @@ class BaseApp():
     )
 
     login_required = True
+
     def __init__(self):
         os.makedirs(self.BASE_DIR, exist_ok=True)
-        self.config = JsonDict(os.path.join(self.BASE_DIR, self.SNAKE_NAME + "_config.json"))
+        self.config = JsonDict(
+            os.path.join(self.BASE_DIR, self.SNAKE_NAME + "_config.json")
+        )
 
         logging.basicConfig(
             level=self.config.get(
@@ -56,12 +60,18 @@ class BaseApp():
 
         # plugin to django
         plug_in_django_manage.plug_in(DjangoArduinoControllerConfig, self.config)
-        plug_in_django_manage.CONFIG.put("django_settings", "apps", "channels", value=True)
+        plug_in_django_manage.CONFIG.put(
+            "django_settings", "apps", "channels", value=True
+        )
 
         # set site parameters
         plug_in_django_manage.CONFIG.put("public", "site", "title", value=self.BASENAME)
-        plug_in_django_manage.CONFIG.put("django_settings", "DEBUG", value=self.DEBUGGING)
-        plug_in_django_manage.CONFIG.put("django_settings", "BASE_DIR", value=self.BASE_DIR)
+        plug_in_django_manage.CONFIG.put(
+            "django_settings", "DEBUG", value=self.DEBUGGING
+        )
+        plug_in_django_manage.CONFIG.put(
+            "django_settings", "BASE_DIR", value=self.BASE_DIR
+        )
 
         if self.login_required:
             # login required
@@ -87,32 +97,48 @@ class BaseApp():
             plug_in_django_manage.plug_in(app_config, self.config)
 
     def migrate(self):
-        plug_in_django_manage.run(
-            sys.argv[0],
-            "makemigrations"
-            )
-        plug_in_django_manage.run(
-            sys.argv[0],
-            "migrate"
-        )
+        plug_in_django_manage.run(sys.argv[0], "makemigrations")
+        plug_in_django_manage.run(sys.argv[0], "migrate")
 
-    def run(self,open_browser=False,open_data_dir=False):
+    def run(self, open_browser=False, open_data_dir=False):
         if open_browser:
+
             def check_thread():
                 import urllib.request
-                while not urllib.request.urlopen("http://localhost:{}".format(plug_in_django_manage.CONFIG.get("django_settings", "port", default=8000))).getcode() == 200:
+
+                while (
+                    not urllib.request.urlopen(
+                        "http://localhost:{}".format(
+                            plug_in_django_manage.CONFIG.get(
+                                "django_settings", "port", default=8000
+                            )
+                        )
+                    ).getcode()
+                    == 200
+                ):
                     time.sleep(200)
                 import webbrowser
-                webbrowser.open("http://localhost:{}".format(plug_in_django_manage.CONFIG.get("django_settings", "port", default=8000)), new=2)
+
+                webbrowser.open(
+                    "http://localhost:{}".format(
+                        plug_in_django_manage.CONFIG.get(
+                            "django_settings", "port", default=8000
+                        )
+                    ),
+                    new=2,
+                )
+
             import threading
+
             threading.Thread(target=check_thread).start()
         if open_data_dir:
             import webbrowser
-            if sys.platform == 'darwin':
+
+            if sys.platform == "darwin":
                 webbrowser.open(self.BASE_DIR)
-            elif sys.platform == 'linux2':
+            elif sys.platform == "linux2":
                 webbrowser.open(self.BASE_DIR)
-            elif sys.platform == 'win32':
+            elif sys.platform == "win32":
                 webbrowser.open(self.BASE_DIR)
             else:
                 webbrowser.open(self.BASE_DIR)
@@ -122,6 +148,8 @@ class BaseApp():
             "--noreload",
             "0.0.0.0:"
             + str(
-                plug_in_django_manage.CONFIG.get("django_settings", "port", default=8000)
+                plug_in_django_manage.CONFIG.get(
+                    "django_settings", "port", default=8000
+                )
             ),
-            )
+        )
