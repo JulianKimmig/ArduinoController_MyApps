@@ -3,24 +3,16 @@
 {% block contend %}
     <div class="topic-title h5">Tests</div>
     <a class="btn btn-warning" href='{% url "tensile_tester:calibrate"%}'>Calibrate</a>
-    <button class="btn btn-primary">+ perform Test</button>
+    <a class="btn btn-primary" href='{% url "tensile_tester:new_measurement"%}'>+ perform Test</a>
     <table>
     {% for test in tensile_tests %}
     <tr>
         <td>{{test.name}}</td>
-        <td><a href='{% url "tensile_tester:view_test" id=test.id %}'>Show</a></td>
-        <td><img src="{{tensile_tester.image.url}}" width="200"/></td>
+        <td><a class="btn btn-primary" href='{% url "tensile_tester:view_test" id=test.id%}'>View</a></td>
+        <td>{%if test.data%}<a class="btn btn-primary" href='{{test.data.url}}' download="">Downlaod</a>{% endif %}</td>
+        <td>{%if test.image%}<img src="{{test.image.url}}" width="200"/>{% endif %}</td>
+
     </tr>
     {%endfor%}
-    </table>
-    <div class="topic-title h5">Routines</div>
-    <a class="btn btn-primary" href="{% url 'tensile_tester:new_routine'%}">create Routine</a>
-    <table>
-        {% for routine in tensile_routines %}
-        <tr>
-            <td>{{routine.name}}</td>
-            <td><a href='{% url "tensile_tester:view_routine" id=test.id %}'>Show</a></td>
-        </tr>
-        {%endfor%}
     </table>
 {% endblock %}

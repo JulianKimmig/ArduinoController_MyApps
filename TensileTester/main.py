@@ -20,5 +20,5 @@ class TensileTesterApp(BaseApp):
 
 if __name__ == "__main__":
     TensileTesterApp.app_configs[0].baseurl = ""
-    # TensileTesterApp().migrate()
-    TensileTesterApp().run(open_browser=False, open_data_dir=True)
+    TensileTesterApp().run(open_browser=False, open_data_dir=False)
+

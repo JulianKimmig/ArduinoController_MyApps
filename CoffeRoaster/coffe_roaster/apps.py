@@ -1,10 +1,7 @@
-import os
-
 from django.apps import AppConfig
 
-
-from django_arduino_controller.apps import DjangoArduinoControllerConfig
 from CoffeRoaster.coffe_roaster.coffe_roaster_api import CoffeRoasterApi
+from django_arduino_controller.apps import DjangoArduinoControllerConfig
 
 
 class CoffeRoasterConfig(AppConfig):

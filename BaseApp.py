@@ -27,6 +27,9 @@ class BaseApp:
     login_required = True
 
     def __init__(self):
+        self.to_migrate=False
+        if not os.path.exists(self.BASE_DIR):
+            self.to_migrate=True
         os.makedirs(self.BASE_DIR, exist_ok=True)
         self.config = JsonDict(
             os.path.join(self.BASE_DIR, self.SNAKE_NAME + "_config.json")
@@ -101,8 +104,9 @@ class BaseApp:
         plug_in_django_manage.run(sys.argv[0], "migrate")
 
     def run(self, open_browser=False, open_data_dir=False):
+        if self.to_migrate:
+            self.migrate()
         if open_browser:
-
             def check_thread():
                 import urllib.request
 
